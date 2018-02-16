@@ -7,7 +7,9 @@ set -e
 : ${CCU2_VERSION:="2.31.25.20180119"}
 
 #Docker ID is used to push built image to a docker repository (needed for docker swarm)
-: ${DOCKER_ID:="litti/dccu2-x86_64"}
+: ${DOCKER_ID:="chworld/dccu2-armv7hf"}
+
+: ${ARCH:="arm-gnueabihf"}
 
 #############################################
 # No need to touch anything below this line #
@@ -17,7 +19,7 @@ RDIR=${PWD}
 BUILD_FOLDER=$RDIR/build
 DOCKER_BUILD=docker_build
 DOCKER_VOLUME_INTERNAL_PATH="/usr/local/"
-DOCKER_NAME=dccu2-x86_64
+DOCKER_NAME=dccu2-armv7hf
 
 . ./prepare.sh
 

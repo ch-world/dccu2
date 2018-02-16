@@ -37,34 +37,37 @@ if [ ! -d "$RDIR/dependencies/occu" ]; then
 	git clone https://github.com/eq-3/occu $RDIR/dependencies/occu/
 else
 	echo "OCCU-Repository already there, just pulling changes"
-	git -C $RDIR/dependencies/occu pull
+	# TODO git -C $RDIR/dependencies/occu pull
 fi
+
+# checkout occu version
+git -C $RDIR/dependencies/occu checkout 2.31.25
 
 # lighttpd
 echo "building lighttpd"
-cp -l $RDIR/dependencies/occu/X86_32_Debian_Wheezy/packages/lighttpd/bin/* $DOCKER_BUILD/usr/sbin
-cp -rl $RDIR/dependencies/occu/X86_32_Debian_Wheezy/packages/lighttpd/etc/lighttpd $DOCKER_BUILD/etc/lighttpd
-cp -rl $RDIR/dependencies/occu/X86_32_Debian_Wheezy/packages/lighttpd/lib $DOCKER_BUILD/lib
+cp -l $RDIR/dependencies/occu/$ARCH/packages/lighttpd/bin/* $DOCKER_BUILD/usr/sbin
+cp -rl $RDIR/dependencies/occu/$ARCH/packages/lighttpd/etc/lighttpd $DOCKER_BUILD/etc/lighttpd
+cp -rl $RDIR/dependencies/occu/$ARCH/packages/lighttpd/lib $DOCKER_BUILD/lib
 
 # linuxbasis
 echo "building linuxbasis"
-cp -rl $RDIR/dependencies/occu/X86_32_Debian_Wheezy/packages-eQ-3/LinuxBasis/bin $DOCKER_BUILD/bin
-cp -rl $RDIR/dependencies/occu/X86_32_Debian_Wheezy/packages-eQ-3/LinuxBasis/lib/* $DOCKER_BUILD/lib/
+cp -rl $RDIR/dependencies/occu/$ARCH/packages-eQ-3/LinuxBasis/bin $DOCKER_BUILD/bin
+cp -rl $RDIR/dependencies/occu/$ARCH/packages-eQ-3/LinuxBasis/lib/* $DOCKER_BUILD/lib/
 
 # hs485d - we love wired :-)
 echo "building hs485d - we love wired :-)"
-cp -rl $RDIR/dependencies/occu/X86_32_Debian_Wheezy/packages-eQ-3/HS485D/bin/* $DOCKER_BUILD/bin/
-cp -rl $RDIR/dependencies/occu/X86_32_Debian_Wheezy/packages-eQ-3/HS485D/lib/* $DOCKER_BUILD/lib/
+cp -rl $RDIR/dependencies/occu/$ARCH/packages-eQ-3/HS485D/bin/* $DOCKER_BUILD/bin/
+cp -rl $RDIR/dependencies/occu/$ARCH/packages-eQ-3/HS485D/lib/* $DOCKER_BUILD/lib/
 
 # rfd
 echo "building rfd"
-cp -rl $RDIR/dependencies/occu/X86_32_Debian_Wheezy/packages-eQ-3/RFD/bin/SetInterfaceClock $DOCKER_BUILD/bin/
-cp -rl $RDIR/dependencies/occu/X86_32_Debian_Wheezy/packages-eQ-3/RFD/bin/avrprog $DOCKER_BUILD/bin/
-cp -rl $RDIR/dependencies/occu/X86_32_Debian_Wheezy/packages-eQ-3/RFD/bin/crypttool $DOCKER_BUILD/bin/
-cp -rl $RDIR/dependencies/occu/X86_32_Debian_Wheezy/packages-eQ-3/RFD/bin/rfd $DOCKER_BUILD/bin/
-cp -rl $RDIR/dependencies/occu/X86_32_Debian_Wheezy/packages-eQ-3/RFD/etc/config_templates/* $DOCKER_BUILD/etc/config_templates/
-cp -rl $RDIR/dependencies/occu/X86_32_Debian_Wheezy/packages-eQ-3/RFD/etc/crRFD.conf $DOCKER_BUILD/etc/
-cp -rlf $RDIR/dependencies/occu/X86_32_Debian_Wheezy/packages-eQ-3/RFD/lib/* $DOCKER_BUILD/lib/
+cp -rl $RDIR/dependencies/occu/$ARCH/packages-eQ-3/RFD/bin/SetInterfaceClock $DOCKER_BUILD/bin/
+cp -rl $RDIR/dependencies/occu/$ARCH/packages-eQ-3/RFD/bin/avrprog $DOCKER_BUILD/bin/
+cp -rl $RDIR/dependencies/occu/$ARCH/packages-eQ-3/RFD/bin/crypttool $DOCKER_BUILD/bin/
+cp -rl $RDIR/dependencies/occu/$ARCH/packages-eQ-3/RFD/bin/rfd $DOCKER_BUILD/bin/
+cp -rl $RDIR/dependencies/occu/$ARCH/packages-eQ-3/RFD/etc/config_templates/* $DOCKER_BUILD/etc/config_templates/
+cp -rl $RDIR/dependencies/occu/$ARCH/packages-eQ-3/RFD/etc/crRFD.conf $DOCKER_BUILD/etc/
+cp -rlf $RDIR/dependencies/occu/$ARCH/packages-eQ-3/RFD/lib/* $DOCKER_BUILD/lib/
 
 # HMIPServer
 echo "building HMIPServer"
@@ -73,10 +76,10 @@ cp -rl $RDIR/dependencies/occu/HMserver/* $DOCKER_BUILD/
 
 # Tante rega ;-)
 echo "building ReGaHss ;-)"
-cp -rl $RDIR/dependencies/occu/X86_32_Debian_Wheezy/packages-eQ-3/WebUI/bin/* $DOCKER_BUILD/bin/
+cp -rl $RDIR/dependencies/occu/$ARCH/packages-eQ-3/WebUI/bin/* $DOCKER_BUILD/bin/
 cp -rl $RDIR/dependencies/occu/WebUI/bin/* $DOCKER_BUILD/bin/
-cp -rl $RDIR/dependencies/occu/X86_32_Debian_Wheezy/packages-eQ-3/WebUI/etc/rega.conf $DOCKER_BUILD/etc/
-cp -rlf $RDIR/dependencies/occu/X86_32_Debian_Wheezy/packages-eQ-3/WebUI/lib/* $DOCKER_BUILD/lib/
+cp -rl $RDIR/dependencies/occu/$ARCH/packages-eQ-3/WebUI/etc/rega.conf $DOCKER_BUILD/etc/
+cp -rlf $RDIR/dependencies/occu/$ARCH/packages-eQ-3/WebUI/lib/* $DOCKER_BUILD/lib/
 cp -rlP $RDIR/dependencies/occu/WebUI/www $DOCKER_BUILD/www
 
 #version info

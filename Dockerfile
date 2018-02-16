@@ -1,4 +1,27 @@
-FROM litti/debian-stretch-for-ccu2:latest
+FROM resin/armv7hf-debian-qemu
+
+RUN [ "cross-build-start" ]
+
+RUN sh -c 'echo deb http://ftp.debian.org/debian jessie-backports main > /etc/apt/sources.list.d/backports.list'
+
+RUN apt-get update && apt-get install -y \
+      apt-utils
+
+# Fix problem when installing Java with missing man dir
+RUN mkdir /usr/share/man/man1
+RUN mkdir /usr/share/man/man7
+
+RUN apt-get install -y \
+      usbutils \
+      wget \
+      openssh-server \
+      libc6 \
+      libstdc++6 \
+      libssl1.0.0
+
+RUN apt-get -y -t jessie-backports install \
+      openjdk-8-jre-headless \
+      && rm -rf /var/lib/apt/lists/*
 
 ADD bin /bin
 ADD boot /boot
@@ -10,7 +33,7 @@ ADD sbin /sbin
 ADD usr /usr
 ADD www /www
 
-RUN update-usbids
+# RUN update-usbids
 RUN rm -rf /usr/local/* && \
       mkdir -p /usr/local/tmp && \
       mkdir -p /usr/local/etc/config && \
@@ -19,8 +42,6 @@ RUN rm -rf /usr/local/* && \
       mkdir -p /usr/local/etc/config/addons/www && \
       mkdir -p /var/status && \
       ln -s ../usr/local/etc/config /etc/config && \
-      ln -s /usr/lib/i386-linux-gnu/libssl.so /usr/lib/libssl.so.1.0.0 && \
-      ln -s /usr/lib/i386-linux-gnu/libcrypto.so /usr/lib/libcrypto.so.1.0.0 && \
       mkdir /opt/hm && \
       touch /var/rf_address && \
       ln -s /bin /opt/hm/bin && \
@@ -66,3 +87,5 @@ EXPOSE 2010
 EXPOSE 8181
 #virtualdevices
 EXPOSE 9292
+
+RUN [ "cross-build-end" ]
