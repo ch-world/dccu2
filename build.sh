@@ -4,7 +4,10 @@
 set -e
 
 #CCU2 firmware version
-: ${CCU2_VERSION:="2.31.25.20180119"}
+: ${CCU2_VERSION:="2.31.25"}
+
+#Build version
+: ${BUILD_VERSION:="20180217"}
 
 #Docker ID is used to push built image to a docker repository (needed for docker swarm)
 : ${DOCKER_ID:="chworld/dccu2-armv7hf"}
@@ -30,10 +33,10 @@ if [ "$1" == "dev" ]; then
   echo "docker push $DOCKER_ID:dev" >>push.sh
   chmod 755 push.sh
 else
-  docker build -t $DOCKER_ID -t $DOCKER_ID:$CCU2_VERSION $DOCKER_BUILD
+  docker build -t $DOCKER_ID -t $DOCKER_ID:$CCU2_VERSION-$BUILD_VERSION $DOCKER_BUILD
 
   echo "#!/bin/sh" >push.sh
   echo "docker push $DOCKER_ID" >>push.sh
-  echo "docker push ${DOCKER_ID}:${CCU2_VERSION}" >>push.sh
+  echo "docker push ${DOCKER_ID}:${CCU2_VERSION}-${BUILD_VERSION}" >>push.sh
   chmod 755 push.sh
 fi

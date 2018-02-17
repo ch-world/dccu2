@@ -41,7 +41,7 @@ else
 fi
 
 # checkout occu version
-git -C $RDIR/dependencies/occu checkout 2.31.25
+git -C $RDIR/dependencies/occu checkout $CCU2_VERSION
 
 # lighttpd
 echo "building lighttpd"
@@ -83,10 +83,11 @@ cp -rlf $RDIR/dependencies/occu/$ARCH/packages-eQ-3/WebUI/lib/* $DOCKER_BUILD/li
 cp -rlP $RDIR/dependencies/occu/WebUI/www $DOCKER_BUILD/www
 
 #version info
-sed -i 's/WEBUI_VERSION = ".*";/WEBUI_VERSION = "'$CCU2_VERSION'";/' $DOCKER_BUILD/www/rega/pages/index.htm
+sed -i 's/WEBUI_VERSION = ".*";/WEBUI_VERSION = "'$CCU2_VERSION-$BUILD_VERSION'";/' $DOCKER_BUILD/www/rega/pages/index.htm
 sed -i 's/product == "HM-CCU2"/product == "HM-dccu2-x86_64"/' $DOCKER_BUILD/www/webui/webui.js
-sed -i 's/"http:\/\/update\.homematic\.com\/firmware\/download?cmd=js_check_version&version="+WEBUI_VERSION+"&product=HM-CCU2&serial=" + serial/"https:\/\/gitcdn.xyz\/repo\/litti\/dccu2\/master\/release\/latest-release.js?cmd=js_check_version\&version="+WEBUI_VERSION+"\&product=HM-dccu2-x86_64\&serial=" + serial/' $DOCKER_BUILD/www/webui/webui.js >dada.js
-echo "homematic.com.setLatestVersion('$CCU2_VERSION', 'HM-dccu2-x86_64');" > $RDIR/release/latest-release.js
+#sed -i 's/"http:\/\/update\.homematic\.com\/firmware\/download?cmd=js_check_version&version="+WEBUI_VERSION+"&product=HM-CCU2&serial=" + serial/"https:\/\/gitcdn.xyz\/repo\/ch-world\/dccu2\/master\/release\/latest-release.js?cmd=js_check_version\&version="+WEBUI_VERSION+"\&product=HM-dccu2-armv7hf\&serial=" + serial/' $DOCKER_BUILD/www/webui/webui.js >dada.js
+sed -i 's/"http:\/\/update\.homematic\.com\/firmware\/download?cmd=js_check_version&version="+WEBUI_VERSION+"&product=HM-CCU2&serial=" + serial/"https:\/\/cdn.rawgit.com\/ch-world\/dccu2\/master\/release\/latest-release.js?cmd=js_check_version\&version="+WEBUI_VERSION+"\&product=HM-dccu2-armv7hf\&serial=" + serial/' $DOCKER_BUILD/www/webui/webui.js >dada.js
+echo "homematic.com.setLatestVersion('$CCU2_VERSION-$BUILD_VERSION', 'HM-dccu2-armv7hf');" > $RDIR/release/latest-release.js
 
 #fix devconfig
 sed -i 's/<div class=\\\"StdTableBtn CLASS21701\\\" onclick=\\\"window\.open('\''\/tools\/devconfig\.cgi?sid=\$sid'\'');\\\">devconfig<\/div>/<div class=\\\"cpButton\\\"><div class=\\\"StdTableBtn CLASS21701\\\" onclick=\\\"window\.open\('\''\/tools\/devconfig\.cgi\?sid=\$sid'\''\);\\\">devconfig<\/div><div class=\\\"StdTableBtnHelp\\\"><\/div><\/div>/' $DOCKER_BUILD/www/config/control_panel.cgi

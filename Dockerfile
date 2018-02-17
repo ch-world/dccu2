@@ -69,6 +69,8 @@ ADD entrypoint.sh /
 
 CMD ["/entrypoint.sh"]
 
+VOLUME ["/usr/local"]
+
 #ssh
 EXPOSE 22
 #webui

@@ -1,1 +1,1 @@
-homematic.com.setLatestVersion('2.31.25.20180119', 'HM-dccu2-x86_64');
+homematic.com.setLatestVersion('2.31.25-20180217', 'HM-dccu2-armv7hf');
